@@ -412,20 +412,28 @@ static struct s5pv210_cpufreq_voltage smdkc110_cpufreq_volt[] = {
 		.varm	= 1350000,
 		.vint	= 1150000,
 	}, {
+		.freq	= 1300000,
+		.varm	= 1300000,
+		.vint	= 1100000,
+	}, {
 		.freq	= 1200000,
-		.varm	= 1275000,
+		.varm	= 1250000,
+		.vint	= 1100000,
+	}, {
+		.freq	= 1100000,
+		.varm	= 1250000,
 		.vint	= 1100000,
 	}, {
 		.freq	= 1000000,
-		.varm	= 1275000,
+		.varm	= 1225000,
 		.vint	= 1100000,
 	}, {
 		.freq	=  800000,
-		.varm	= 1200000,
+		.varm	= 1150000,
 		.vint	= 1100000,
 	}, {
 		.freq	=  400000,
-		.varm	= 1050000,
+		.varm	=  955000,
 		.vint	= 1100000,
 	}, {
 		.freq	=  200000,
@@ -507,9 +515,9 @@ static struct regulator_consumer_supply esafeout2_consumer[] = {
 
 static struct regulator_init_data wave_ldo2_data = {
 	.constraints	= {
-		.name		= "VALIVE_1.2V",
-		.min_uV		= 1200000,
-		.max_uV		= 1200000,
+		.name		= "VALIVE_1.1V",
+		.min_uV		= 1100000,
+		.max_uV		= 1100000,
 		.apply_uV	= 1,
 		.always_on	= 1,
 		.state_mem	= {
@@ -739,7 +747,7 @@ static struct regulator_init_data wave_buck2_data = {
 		.valid_ops_mask	= REGULATOR_CHANGE_VOLTAGE |
 				  REGULATOR_CHANGE_STATUS,
 		.state_mem	= {
-			.uV	= 1100000,
+			.uV	= 1200000,
 			.mode	= REGULATOR_MODE_NORMAL,
 			.disabled = 1,
 		},
