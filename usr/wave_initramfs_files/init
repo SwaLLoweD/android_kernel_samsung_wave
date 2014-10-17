@@ -9,6 +9,8 @@ busybox cd /
 busybox date >>boot.txt
 exec >>boot.txt 2>&1
 busybox rm init
+busybox mkdir /proc
+busybox mkdir /sys
 busybox mount -t proc proc /proc
 busybox mount -t sysfs sysfs /sys
 
@@ -19,10 +21,19 @@ done
 
 busybox mount -t ext4 /dev/block/mmcblk0p1 /cache
 busybox mount -t ext4 /dev/block/mmcblk0p2 /system
+busybox mount -t vfat -o noatime /dev/block/mmcblk0p2 /bada_user
+
+if [ ! -f /bada_user/cache.img ] ; then
+	#18MB cache partition
+	make_ext4fs -l 18874368 /bada_system/cache.img
+fi
+
+busybox losetup /dev/loop0 /bada_user/cache.img
+busybox mount -t ext4 /dev/loop1 /cache
 
 image=/stage1/ramdisk.img
 
-if busybox test -e /cache/.startrecovery || busybox grep -q bootmode=2 /proc/cmdline || busybox grep -q recovery /proc/cmdline ; then
+if  busybox grep -q "recovery" /proc/cmdline || busybox grep -q "init=/init bootmode=0 loglevel=0 androidboot.serialno=0000045600000123 bootmode=2" /proc/cmdline || busybox grep -q "init=/init bootmode=0 loglevel=4 androidboot.serialno=0000045600000123 bootmode=2" /proc/cmdline || busybox grep -q "bootmode=2" /proc/cmdline || busybox test -e /cache/.startrecovery || busybox grep -q bootmode=2 /proc/cmdline  ; then
 	# recovery boot
 	busybox rm -fr /cache/.startrecovery
 	image=/stage1/ramdisk-recovery.img
@@ -44,6 +55,8 @@ fi
 
 busybox umount /cache
 busybox umount /system
+busybox losetup -d /dev/loop0
+busybox umount /bada_user
 
 busybox zcat $image | busybox cpio -i
 
