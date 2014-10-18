@@ -37,12 +37,12 @@ busybox mount -t ext4 /dev/block/mmcblk0p2 /system
 busybox losetup /dev/loop0 /bada_user/cache.img
 busybox mount -t ext4 /dev/loop1 /cache
 
-image=/stage1/ramdisk.img
+image=/stage1/ramdisk.cpio
 
 if  busybox grep -q "recovery" /proc/cmdline || busybox grep -q "init=/init bootmode=0 loglevel=0 androidboot.serialno=0000045600000123 bootmode=2" /proc/cmdline || busybox grep -q "init=/init bootmode=0 loglevel=4 androidboot.serialno=0000045600000123 bootmode=2" /proc/cmdline || busybox grep -q "bootmode=2" /proc/cmdline || busybox test -e /cache/.startrecovery || busybox grep -q bootmode=2 /proc/cmdline  ; then
 	# recovery boot
 	busybox rm -fr /cache/.startrecovery
-	image=/stage1/ramdisk-recovery.img
+	image=/stage1/ramdisk-recovery.cpio
 
 	# disable lpm
 	busybox echo 0 > /sys/class/power_supply/battery/charging_mode_booting
@@ -53,10 +53,13 @@ elif ! busybox test -e /system/build.prop; then
 	busybox mount -t ext4 /dev/block/mmcblk0p1 /cache
 	busybox mkdir /cache/recovery
 
-	image=/stage1/ramdisk-recovery.img
+	image=/stage1/ramdisk-recovery.cpio
 
 	# disable lpm
 	busybox echo 0 > /sys/class/power_supply/battery/charging_mode_booting
+	# Bigmem
+	# elif ! busybox grep -q bootmode=10 /proc/cmdline ; then
+
 fi
 
 busybox umount /cache
@@ -64,7 +67,7 @@ busybox umount /system
 # busybox losetup -d /dev/loop0
 # busybox umount /bada_user
 
-busybox zcat $image | busybox cpio -i
+busybox cpio -i < $image
 
 busybox umount /sys
 busybox umount /proc
