@@ -27,15 +27,6 @@ busybox mkdir /data
 
 busybox mount -t ext4 /dev/block/mmcblk0p1 /cache
 busybox mount -t ext4 /dev/block/mmcblk0p2 /system
-# busybox mount -t vfat -o noatime /dev/block/mmcblk0p2 /bada_user
-
-# if [ ! -f /bada_user/cache.img ] ; then
-	#18MB cache partition
-#	make_ext4fs -l 18874368 /bada_system/cache.img
-# fi
-
-busybox losetup /dev/loop0 /bada_user/cache.img
-busybox mount -t ext4 /dev/loop1 /cache
 
 image=/stage1/ramdisk.cpio
 
@@ -64,8 +55,6 @@ fi
 
 busybox umount /cache
 busybox umount /system
-# busybox losetup -d /dev/loop0
-# busybox umount /bada_user
 
 busybox cpio -i < $image
 
