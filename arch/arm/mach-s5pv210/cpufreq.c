@@ -107,61 +107,34 @@ static unsigned int g_dvfslockval[DVFS_LOCK_TOKEN_NUM];
 const unsigned long arm_volt_max = 1450000;
 const unsigned long int_volt_max = 1250000;
 
-#ifdef CONFIG_MACH_P1
-
-#define ARM_VOLT_1_4_GHZ	1450000
-#define INT_VOLT_1_4_GHZ	1175000
-#define ARM_VOLT_1_3_GHZ	1450000
-#define INT_VOLT_1_3_GHZ	1175000
-#define ARM_VOLT_1_2_GHZ	1450000
-#define INT_VOLT_1_2_GHZ	1175000
-#define ARM_VOLT_1_1_GHZ	1400000
-#define INT_VOLT_1_1_GHZ	1150000
-#define ARM_VOLT_1_0_GHZ	1350000
-#define ARM_VOLT_800_MHZ	1275000
-
-#else // CONFIG_MACH_ARIES
-
-#define ARM_VOLT_1_4_GHZ	1400000
-#define INT_VOLT_1_4_GHZ	1175000
-#define ARM_VOLT_1_3_GHZ	1375000
-#define INT_VOLT_1_3_GHZ	1150000
-#define ARM_VOLT_1_2_GHZ	1350000
-#define INT_VOLT_1_2_GHZ	1150000
-#define ARM_VOLT_1_1_GHZ	1300000
-#define INT_VOLT_1_1_GHZ	1100000
-#define ARM_VOLT_1_0_GHZ	1275000
-#define ARM_VOLT_800_MHZ	1200000
-
-#endif
 
 static struct s5pv210_dvs_conf dvs_conf[] = {
 	[OC0] = {
-		.arm_volt   = ARM_VOLT_1_4_GHZ,
-		.int_volt   = INT_VOLT_1_4_GHZ,
+		.arm_volt   = 1350000,
+		.int_volt   = 1150000,
 	},
 	[OC1] = {
-		.arm_volt   = ARM_VOLT_1_3_GHZ,
-		.int_volt   = INT_VOLT_1_3_GHZ,
-	},
+		.arm_volt   = 1300000,
+		.int_volt   = 1100000,
+	},	
 	[OC2] = {
-		.arm_volt   = ARM_VOLT_1_2_GHZ,
-		.int_volt   = INT_VOLT_1_2_GHZ,
+		.arm_volt   = 1250000,
+		.int_volt   = 1100000,
 	},
 	[OC3] = {
-		.arm_volt   = ARM_VOLT_1_1_GHZ,
-		.int_volt   = INT_VOLT_1_1_GHZ,
+		.arm_volt   = 1250000,
+		.int_volt   = 1100000,
 	},
 	[L0] = {
-		.arm_volt   = ARM_VOLT_1_0_GHZ,
+		.arm_volt   = 1225000,
 		.int_volt   = 1100000,
 	},
 	[L1] = {
-		.arm_volt   = ARM_VOLT_800_MHZ,
+		.arm_volt   = 1150000,
 		.int_volt   = 1100000,
 	},
 	[L2] = {
-		.arm_volt   = 1050000,
+		.arm_volt   = 955000,
 		.int_volt   = 1100000,
 	},
 	[L3] = {
@@ -192,7 +165,7 @@ static u32 clkdiv_val[9][11] = {
 	{0, 5, 5, 1, 3, 1, 4, 1, 3, 0, 0},
 
 	/* OC3 : [1100/200/200/100][166/83][133/66][200/200] */
-	{0, 5, 5, 1, 3, 1, 4, 1, 3, 0, 0},
+ 	{0, 5, 5, 1, 3, 1, 4, 1, 3, 0, 0},
 
 	/* L0 : [1000/200/100][166/83][133/66][200/200] */
 	{0, 4, 4, 1, 3, 1, 4, 1, 3, 0, 0},
